@@ -4,7 +4,6 @@ import os
 from .config import settings
 from tqdm.auto import tqdm
 import pandas as pd
-from datetime import datetime
 import datetime as dt
 import schedule
 import time

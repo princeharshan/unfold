@@ -161,12 +161,15 @@ def get_insights(preQuestion,query,preFormat,DateFilter):
     # The response from Pinecone includes our original text in the `metadata` field, let's print out the `top_k` most similar questions and their respective similarity scores.
     resultIDs = []
     for match in filtered_res['matches']:
-        resultIDs.append(int(match['id']))
+        # resultIDs.append(int(match['id']))
+        resultIDs.append(match['metadata']['text'])
     #     print(f"{match['id']} | {match['score']:.2f} | {match['metadata']['text']}")
 
     reviews_df = pd.read_parquet('/Users/princeharshan/Fast API/app/ContactsAllSourcesMerged.parquet.gzip')
 
-    contextualDF = reviews_df.loc[reviews_df.index.isin(resultIDs)].copy()
+    # contextualDF = reviews_df.loc[reviews_df.index.isin(resultIDs)].copy()
+    
+    contextualDF = reviews_df.loc[reviews_df['Contact body'].isin(resultIDs)].copy()
 
     # convert timestamp to datetime object
     contextualDF.loc[:, 'timestamp'] = pd.to_datetime(contextualDF['timestamp'])

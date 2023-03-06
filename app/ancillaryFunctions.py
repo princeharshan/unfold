@@ -152,10 +152,10 @@ def get_insights(preQuestion,query,preFormat,DateFilter):
     # create the query embedding
     xq = openai.Embedding.create(input=query, engine=MODEL)['data'][0]['embedding']
     # query, returning the top 5 most similar results
-    res = index.query([xq], top_k=100, include_metadata=True)
+    res = index.query([xq], top_k=500, include_metadata=True)
 
     # Assume `res` is the original QueryResponse object
-    filtered_matches = [match for match in res.matches if match.score > 0.82]
+    filtered_matches = [match for match in res.matches if match.score > 0.83]
     filtered_res = QueryResponse(matches=filtered_matches, namespace=res.namespace)
 
     # The response from Pinecone includes our original text in the `metadata` field, let's print out the `top_k` most similar questions and their respective similarity scores.
@@ -175,6 +175,7 @@ def get_insights(preQuestion,query,preFormat,DateFilter):
     contextualDF.loc[:, 'timestamp'] = pd.to_datetime(contextualDF['timestamp'])
     contextualDF = contextualDF[(contextualDF['timestamp'] >= customRangeStart) & (contextualDF['timestamp'] <= customRangeEnd)]
     context = contextualDF['Contact body'].to_list()
+    context = context[:100]
 
     # build our prompt with the retrieved contexts included
     prompt_start = (

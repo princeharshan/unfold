@@ -147,7 +147,7 @@ async def get_insights(insights:insights):
         resultIDs.append(int(match['id']))
     #     print(f"{match['id']} | {match['score']:.2f} | {match['metadata']['text']}")
 
-    reviews_df = pd.read_parquet('/Users/princeharshan/Fast API/app/ContactsAllSourcesMerged.parquet.gzip')
+    reviews_df = pd.read_parquet('ContactsAllSourcesMerged.parquet.gzip')
 
     contextualDF = reviews_df.loc[reviews_df.index.isin(resultIDs)].copy()
 

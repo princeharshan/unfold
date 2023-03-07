@@ -180,9 +180,9 @@ async def get_insights(insights:insights):
     json_dict = {complete(query_with_contexts): json.loads(json_object)}
 
     # convert the dictionary to a JSON string
-    json_string = json.dumps(json_dict)
+    # json_string = json.dumps(json_dict)
 
-    print(json_string)
+    return json_dict
 
 
 @app.get("/")

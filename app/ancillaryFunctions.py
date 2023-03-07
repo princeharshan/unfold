@@ -4,7 +4,7 @@ import pinecone
 from pinecone.core.client.model.query_response import QueryResponse
 import pandas as pd
 import json
-from config import settings
+from app.config import settings
 
 # openaiKey = settings.openaiKey
 # openaiOrg = settings.openaiOrg

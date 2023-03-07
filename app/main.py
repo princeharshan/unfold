@@ -182,7 +182,7 @@ async def get_insights(insights:insights):
     # convert the dictionary to a JSON string
     json_string = json.dumps(json_dict)
 
-    return json_string
+    print(json_string)
 
 
 @app.get("/")

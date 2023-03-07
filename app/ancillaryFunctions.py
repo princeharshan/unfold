@@ -179,11 +179,11 @@ def get_insights(preQuestion,query,preFormat,DateFilter):
 
     # build our prompt with the retrieved contexts included
     prompt_start = (
-        '''Answer the question in '''+preFormat.lower()+'''format based on the context below. If the question cannot be answered using the context provided, answer with "None or not enough information"\n\n'''+
+        '''Answer the question in '''+preFormat.lower()+''' format based on the context below. If the question cannot be answered using the context provided, answer with "None or not enough information"\n\n'''+
         "Context:\n"
     )
     prompt_end = (
-        f"\n\nQuestion: "+preQuestion+query+"? Describe your answer.\nAnswer:")
+        f"\n\nQuestion: "+preQuestion+" "+query+"? Describe your answer.\nAnswer:")
 
     query_with_contexts = prompt_start+str(context)+prompt_end
 

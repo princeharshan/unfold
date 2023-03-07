@@ -7,11 +7,11 @@ import pandas as pd
 import json
 from typing import Optional
 import pinecone
-from app.ancillaryFunctions import complete, extract_dates
+from .ancillaryFunctions import complete, extract_dates
 import openai
 from pinecone.core.client.model.query_response import QueryResponse
 
-from app.config import settings
+from .config import settings
 
 openaiKey = settings.openaiKey
 openaiOrg = settings.openaiOrg

@@ -71,7 +71,7 @@ app = FastAPI()
 
 while True:
     try:
-        conn = psycopg2.connect(host='localhost',database='bravokit',user='postgres',password='NewStart43234!',cursor_factory=RealDictCursor)
+        conn = psycopg2.connect(host=settings.PostgreSQLHost,database=settings.PostgreSQLDatabase,user=settings.PostgreSQLUser,password=settings.PostgreSQLPassword,cursor_factory=RealDictCursor)
         cursor = conn.cursor()
         print("Database connection was successful!")
         break

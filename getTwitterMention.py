@@ -3,7 +3,7 @@
 import tweepy
 import pandas as pd
 from datetime import datetime, timedelta
-from .config import settings
+from .app.config import settings
 import os
 import datetime as dt
 import schedule

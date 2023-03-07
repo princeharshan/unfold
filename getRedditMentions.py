@@ -7,7 +7,7 @@ import requests
 import os
 import schedule
 import time
-from .config import settings
+from .app.config import settings
 
 # #### Environment Vars
 # Reddit Creds

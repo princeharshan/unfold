@@ -1,7 +1,7 @@
 import openai
 import pinecone
 import os
-from .config import settings
+from .app.config import settings
 from tqdm.auto import tqdm
 import pandas as pd
 import datetime as dt

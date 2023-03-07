@@ -1,6 +1,4 @@
-from datetime import date
-from fastapi import FastAPI, Response, status, HTTPException
-from fastapi.params import Body
+from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -9,11 +7,11 @@ import pandas as pd
 import json
 from typing import Optional
 import pinecone
-from .ancillaryFunctions import complete, extract_dates
+from ancillaryFunctions import complete, extract_dates
 import openai
 from pinecone.core.client.model.query_response import QueryResponse
 
-from .config import settings
+from config import settings
 
 openaiKey = settings.openaiKey
 openaiOrg = settings.openaiOrg

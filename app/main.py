@@ -170,8 +170,8 @@ async def get_insights(insights:insights):
 
     query_with_contexts = prompt_start+str(context)+prompt_end
 
-     # print(complete(query_with_contexts))
-     # print(contextualDF.to_json(orient='records'))
+    # print(complete(query_with_contexts))
+    # print(contextualDF.to_json(orient='records'))
 
     # convert the dataframe to a json object
     json_object = contextualDF.to_json(orient='records')

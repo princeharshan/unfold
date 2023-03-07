@@ -4,17 +4,17 @@ import pinecone
 from pinecone.core.client.model.query_response import QueryResponse
 import pandas as pd
 import json
-# from config import settings
+from config import settings
 
 # openaiKey = settings.openaiKey
 # openaiOrg = settings.openaiOrg
 # pineconeKey = settings.pineconeKey
 # pineconeEnv = settings.pineconeEnv
 
-openaiKey = "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"
-openaiOrg = "org-g13V7ruXHpR7Ez8Rg0hk9Yw0"
-pineconeKey = "c1f01425-96ff-4544-97ef-0ba4e22d3d40"
-pineconeEnv = "us-east1-gcp"
+openaiKey = settings.openaiKey
+openaiOrg = settings.openaiOrg
+pineconeKey = settings.pineconeKey
+pineconeEnv = settings.pineconeEnv
 
 unfoldProjects = [
   {

@@ -78,3 +78,10 @@ def main():
     quickClustersDF['timestamp'] = datetime.today().strftime('%Y-%m-%d')
 
     quickClustersDF.to_parquet('quickClustersDF.parquet.gzip', compression='gzip')
+
+# Schedule to run the above function every day
+schedule.every().day.at("08:00").do(main)
+
+while 1:
+    schedule.run_pending()
+    time.sleep(90)

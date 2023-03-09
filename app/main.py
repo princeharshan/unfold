@@ -176,8 +176,14 @@ async def get_insights(insights:insights):
     # convert the dataframe to a json object
     json_object = contextualDF.to_json(orient='records')
 
+    # # create a dictionary with the key as the string you want to append
+    # json_dict = {complete(query_with_contexts): json.loads(json_object)}
+
     # create a dictionary with the key as the string you want to append
-    json_dict = {complete(query_with_contexts): json.loads(json_object)}
+    json_dict = {
+        "summary": complete(query_with_contexts),
+        "values": json.loads(json_object)
+    }
 
     # convert the dictionary to a JSON string
     # json_string = json.dumps(json_dict)

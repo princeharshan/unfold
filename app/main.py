@@ -191,6 +191,70 @@ async def get_insights(insights:insights):
     return json_dict
 
 
+@app.get("/insightsRefactored")
+async def get_insightsRefactored(preQuestion: str, query: str, preFormat: str, DateFilter: str):    
+    customRangeStart = extract_dates(DateFilter)[0] # else '2022-10-01' if custom
+    customRangeEnd = extract_dates(DateFilter)[1] # else '2023-01-15' if custom
+
+    # create the query embedding
+    xq = openai.Embedding.create(input=query, engine=MODEL)['data'][0]['embedding']
+    # query, returning the top 5 most similar results
+    res = index.query([xq], top_k=500, include_metadata=True)
+
+    # Assume `res` is the original QueryResponse object
+    filtered_matches = [match for match in res.matches if match.score > 0.82]
+    filtered_res = QueryResponse(matches=filtered_matches, namespace=res.namespace)
+
+    # The response from Pinecone includes our original text in the `metadata` field, let's print out the `top_k` most similar questions and their respective similarity scores.
+    resultIDs = []
+    for match in filtered_res['matches']:
+        # resultIDs.append(int(match['id']))
+        resultIDs.append(match['metadata']['text'])
+    #     print(f"{match['id']} | {match['score']:.2f} | {match['metadata']['text']}")
+
+    # reviews_df = pd.read_parquet('ContactsAllSourcesMerged.parquet.gzip')
+    reviews_df = pd.read_parquet('app/ContactsAllSourcesMerged.parquet.gzip')
+
+    # contextualDF = reviews_df.loc[reviews_df.index.isin(resultIDs)].copy()
+    contextualDF = reviews_df.loc[reviews_df['Contact body'].isin(resultIDs)].copy()
+
+    # convert timestamp to datetime object
+    contextualDF.loc[:, 'timestamp'] = pd.to_datetime(contextualDF['timestamp'])
+    contextualDF = contextualDF[(contextualDF['timestamp'] >= customRangeStart) & (contextualDF['timestamp'] <= customRangeEnd)]
+    context = contextualDF['Contact body'].to_list()
+    context = context[:100]
+
+    # build our prompt with the retrieved contexts included
+    prompt_start = (
+        '''Answer the question in '''+preFormat.lower()+'''format based on the context below. If the question cannot be answered using the context provided, answer with "None or not enough information"\n\n'''+
+        "Context:\n"
+    )
+    prompt_end = (
+        f"\n\nQuestion: "+preQuestion+query+"? Describe your answer.\nAnswer:")
+
+    query_with_contexts = prompt_start+str(context)+prompt_end
+
+    # print(complete(query_with_contexts))
+    # print(contextualDF.to_json(orient='records'))
+
+    # convert the dataframe to a json object
+    json_object = contextualDF.to_json(orient='records')
+
+    # # create a dictionary with the key as the string you want to append
+    # json_dict = {complete(query_with_contexts): json.loads(json_object)}
+
+    # create a dictionary with the key as the string you want to append
+    json_dict = {
+        "summary": complete(query_with_contexts),
+        "values": json.loads(json_object)
+    }
+
+    # convert the dictionary to a JSON string
+    # json_string = json.dumps(json_dict)
+
+    return json_dict
+
+
 @app.get("/")
 async def root():
     return {"message": "Welcome to unfold APIs"}

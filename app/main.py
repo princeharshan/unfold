@@ -127,7 +127,7 @@ async def create_project(project:project):
     return {"data": new_project}
 
 
-@app.post("/insights")
+@app.get("/insights")
 async def get_insights(insights:insights):
     customRangeStart = extract_dates(insights.DateFilter)[0] # else '2022-10-01' if custom
     customRangeEnd = extract_dates(insights.DateFilter)[1] # else '2023-01-15' if custom

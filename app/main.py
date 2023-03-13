@@ -226,7 +226,7 @@ async def get_insightsRefactored(preQuestion: str, query: str, preFormat: str, D
 
     # build our prompt with the retrieved contexts included
     prompt_start = (
-        '''Answer the question in '''+preFormat.lower()+'''format based on the context below. If the question cannot be answered using the context provided, answer with "None or not enough information"\n\n'''+
+        '''Answer the question in '''+preFormat.lower()+'''format based on the context below. Always start your answer with a relevant object emoji. If the question cannot be answered using the context provided, answer with "None or not enough information"\n\n'''+
         "Context:\n"
     )
     prompt_end = (
